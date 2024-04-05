@@ -8,7 +8,7 @@
 
 (menu-bar-mode -1) ;disable the menu bar
 
-(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 144)
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 112)
 
 ;; make escape quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -106,6 +106,9 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+(use-package auto-complete
+  :ensure t)
 
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
