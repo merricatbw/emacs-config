@@ -8,7 +8,7 @@
 
 (menu-bar-mode -1) ;disable the menu bar
 
-(set-face-attribute 'default nil :font "Iosevka Nerd Font" :height 148)
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 144)
 
 ;; make escape quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -30,6 +30,9 @@
 ;; Initialize use-package on non-linux platforms
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
+
+(require 'org)
+(setq org-hide-emphasis-markers t)
 
 (require 'use-package)
 
@@ -57,13 +60,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(doom-themes evil-collection evil counsel ivy)))
+ '(package-selected-packages
+   '(neotree doom-modeline doom-themes evil-collection evil counsel ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(fringe ((t (:background nil)))))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -92,12 +96,23 @@
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-nord-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (setq doom-themes-treemacs-theme "doom-atom")
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
-(custom-set-faces
- `(fringe ((t (:background nil))))) ;;match fringe to theme
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((C . t)
+   (python . t)))
